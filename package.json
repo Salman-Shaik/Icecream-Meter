@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./test/iTests"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,12 @@
   "homepage": "https://github.com/Salman-Shaik/Icecream-Meter#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.1",
+    "supertest": "^3.4.2"
   }
 }
