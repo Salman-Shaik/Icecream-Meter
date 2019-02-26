@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+
 const lib = require(path.resolve('src/handlers/middlewares'));
 const getHandler = require(path.resolve('src/handlers/getHandler'));
 const postHandler = require(path.resolve('src/handlers/postHandler'));
@@ -7,8 +9,11 @@ const putHandler = require(path.resolve('src/handlers/putHandler'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler'));
 
 const app = express();
-app.initialize = function(meterData){
-  app.meterData = meterData;
+app.initialize = function(fileName) {
+  if(!fs.existsSync(fileName)){
+    fs.appendFileSync(fileName, JSON.stringify({}));
+  }
+  app.meterData = JSON.parse(fs.readFileSync(path.resolve(fileName),'utf-8'));
 };
 
 app.use(express.json());
