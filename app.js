@@ -17,11 +17,13 @@ const createFileIfNotExists = fileName =>{
 const app = express();
 app.initialize = function(fileName) {
   createFileIfNotExists(fileName);
+  app.dataFileName = fileName;
   app.meterData = JSON.parse(fs.readFileSync(path.resolve(fileName),'utf-8'));
 };
 
 app.use(express.json());
 app.use(lib.logger);
+app.use(lib.indexHandler);
 app.use(express.static('public'))
 app.get('/members', getHandler.getMember)
 app.get('/tick', getHandler.getTicks);
