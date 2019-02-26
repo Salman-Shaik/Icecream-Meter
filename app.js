@@ -8,11 +8,15 @@ const postHandler = require(path.resolve('src/handlers/postHandler'));
 const putHandler = require(path.resolve('src/handlers/putHandler'));
 const deleteHandler = require(path.resolve('src/handlers/deleteHandler'));
 
-const app = express();
-app.initialize = function(fileName) {
+const createFileIfNotExists = fileName =>{
   if(!fs.existsSync(fileName)){
     fs.appendFileSync(fileName, JSON.stringify({}));
   }
+}
+
+const app = express();
+app.initialize = function(fileName) {
+  createFileIfNotExists(fileName);
   app.meterData = JSON.parse(fs.readFileSync(path.resolve(fileName),'utf-8'));
 };
 
