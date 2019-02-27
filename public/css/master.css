@@ -1,4 +1,4 @@
-html,body{
+html, body {
   height: 100%;
   width: 100%;
   display: flex;
@@ -7,12 +7,19 @@ html,body{
   flex-direction: column;
 }
 
-header{
+header {
   font-family: 'Snowburst One', cursive;
-  font-size: 380%;
+  font-size: 460%;
+  height: 20%;
 }
-main{
+
+main {
+  height: 80%;
+  width: 80%;
   font-family: Avenir;
+  font-size: 140%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .dot {
@@ -22,14 +29,72 @@ main{
   display: inline-block;
 }
 
-.red{
+.red {
   background-color: #d62d20;
 }
 
-.green{
+.green {
   background-color: #008744;
 }
 
-.yellow{
+.yellow {
   background-color: #ffa700;
+}
+
+li {
+  display: inline-block;
+  height: 20px;
+  border: 1px solid #000;
+  margin: 0 3px 0 0;
+}
+
+li:nth-child(5n) {
+  -webkit-transform: rotate(310deg);
+  -moz-transform: rotate(300deg);
+  -o-transform: rotate(300deg);
+  height: 30px;
+  position: relative;
+  left: -13px;
+  top: 5px;
+  margin-right: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  border: none;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  empty-cells: show;
+}
+
+th {
+  background-color: darkGrey;
+}
+
+tr {
+  background-color: rgb(255, 253, 231);
+}
+
+tr:nth-child(2n) {
+  background-color: #fdf7ff;
+}
+
+.addTick {
+  background-color: #4CAF50;
+  font-family: Avenir;
+  border: none;
+  margin: 0;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  display: inline-block;
+  font-size: 70%;
+  border-radius: 17px;
+  box-shadow: 3px 3px 5px darkGray;
+}
+
+.addTick:hover{
+  background-color: #38783a;
+  box-shadow: 1px 1px 1px darkGray;
 }
