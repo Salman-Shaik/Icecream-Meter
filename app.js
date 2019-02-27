@@ -26,10 +26,9 @@ app.use(lib.logger);
 app.use(lib.indexHandler);
 app.use(express.static('public'))
 app.get('/members', getHandler.getMember)
-app.get('/tick', getHandler.getTicks);
 app.post('/member', postHandler.createMember);
-app.put('/tick', putHandler.incrementTicks);
+app.put('/count', putHandler.incrementTicks);
 app.delete('/member', deleteHandler.deleteMember);
-app.delete('/tick', deleteHandler.clearTicks);
+app.delete('/count', deleteHandler.clearTicks);
 
 module.exports = app;

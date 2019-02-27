@@ -9,9 +9,9 @@ const sendAjaxRequest = (method,url,callBack,reqBody,asyn=true) => {
   ajax.send();
 };
 
-const createElement = (element, innerText, className) => {
+const createElement = (element, innerHTML, className) => {
   let ele = document.createElement(element);
-  ele.innerText = innerText || '';
+  ele.innerHTML = innerHTML || '';
   ele.className = className;
   return ele;
 };
@@ -19,3 +19,5 @@ const createElement = (element, innerText, className) => {
 const appendChilds = (node, ...childs) => {
    childs.forEach(child => node.appendChild(child));
 };
+
+const isObjectEmpty = obj => Object.keys(obj).length === 0;

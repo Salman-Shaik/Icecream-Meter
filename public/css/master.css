@@ -112,3 +112,14 @@ button{
   background-color: #38783a;
   box-shadow: 1px 1px 1px darkGray;
 }
+
+.delete{
+  background-color: black;
+  color: white;
+}
+
+.delete:hover{
+  color: black;
+  background-color: white;
+  box-shadow: 1px 1px 1px darkGray;
+}

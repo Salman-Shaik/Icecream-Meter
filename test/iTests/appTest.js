@@ -17,10 +17,10 @@ describe("#APP", () => {
         .end(done);
     });
   });
-  describe("GET /tick", done => {
+  describe("GET /count", done => {
     it('should get the count of ticks of given memberName', done => {
       request(app)
-        .get('/tick')
+        .get('/count')
         .query({
           memberName: "user1"
         })
@@ -41,10 +41,10 @@ describe("#APP", () => {
         .end(done);
     });
   });
-  describe("PUT /tick", done => {
+  describe("PUT /count", done => {
     it('should update the count of ticks of given memberName', done => {
       request(app)
-        .put('/tick')
+        .put('/count')
         .query({
           memberName: "user1"
         })
@@ -65,10 +65,10 @@ describe("#APP", () => {
         .end(done);
     });
   });
-  describe("DELETE /tick", done => {
+  describe("DELETE /count", done => {
     it('should clear the count of ticks of given memberName', done => {
       request(app)
-        .delete('/tick')
+        .delete('/count')
         .query({
           memberName: "user2"
         })

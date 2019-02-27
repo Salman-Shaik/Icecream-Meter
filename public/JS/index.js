@@ -5,6 +5,7 @@ const createTrWithData = (tag, ...args) => {
 };
 
 const getEle = selectorInput => document.querySelector(selectorInput);
+const getAllEle = selectorInput => document.querySelectorAll(selectorInput);
 
 const getStatus = count => {
   const statusDot = createElement('span','','dot red');
@@ -24,6 +25,7 @@ const updateTally = (tr,count) => {
   appendChilds(tallyData,tallyList);
   appendChilds(tr, tallyData);
 }
+
 const updateStatus = (tr,count) => {
   const statusSpan = getStatus(count);
   const spanData = createElement('td');
@@ -31,18 +33,23 @@ const updateStatus = (tr,count) => {
   appendChilds(tr, spanData);
 }
 
-const appendAddButton = tr => {
-  const add = createElement('button', '+', 'add');
-  const tickData = createElement('td');
-  appendChilds(tickData,add);
-  appendChilds(tr,tickData);
+const appendButton = (tr,innerHTML,className) => {
+  const button = createElement('button',innerHTML,className);
+  const countData = createElement('td');
+  appendChilds(countData,button);
+  appendChilds(tr,countData);
 }
 
-const appendRemoveButton = tr => {
-  const remove = createElement('button', '-', 'remove');
-  const tickData = createElement('td');
-  appendChilds(tickData,remove);
-  appendChilds(tr,tickData);
+const appendAddButton = tr => appendButton(tr, '+', 'add');
+const appendRemoveButton = tr => appendButton(tr,'x','remove');
+const appendDeleteButton = tr => {
+  const del = createElement('button','','delete');
+  let icon =  createElement('i');
+  icon.className = 'fas fa-trash-alt';
+  const data = createElement('td');
+  appendChilds(del,icon);
+  appendChilds(data,del);
+  appendChilds(tr,data);
 }
 
 const updateMemberDetails = (table, name,count) => {
@@ -51,40 +58,63 @@ const updateMemberDetails = (table, name,count) => {
   updateStatus(tr,count);
   appendAddButton(tr);
   appendRemoveButton(tr);
+  appendDeleteButton(tr);
   appendChilds(table,tr);
 }
 
-const fetchMemberName = node => node.parentNode.parentNode.firstChild.innerText;
+const fetchFirstChildText = node => node.firstChild.innerText;
 
-const incrementCount = ({target}) => {
-  const memberName = fetchMemberName(target);
+const fetchGreatGrandParentFirstChild = node => {
+  const greatGrandParent = node.parentNode.parentNode.parentNode;
+  return fetchFirstChildText(greatGrandParent);
+}
+
+const fetchGrandParentFirstChild = node => {
+  const grandParent = node.parentNode.parentNode;
+  return fetchFirstChildText(grandParent);
+}
+
+const fetchMemberName = node => {
+  return fetchGrandParentFirstChild(node) || fetchGreatGrandParentFirstChild(node);
+}
+
+const memberOperations = (node,method,url) => {
+  const memberName = fetchMemberName(node) || node.parentNode.parentNode.parentNode.firstChild.innerText;
   const params = JSON.stringify({"memberName":memberName});
-  sendAjaxRequest("PUT","/tick",'',params);
+  sendAjaxRequest(method,url,'',params);
   fetchMeterDetails();
 }
 
-const clearCount = ({target}) => {
-  const memberName = fetchMemberName(target)
-  const params = JSON.stringify({"memberName":memberName});
-  sendAjaxRequest("DELETE","/tick",'',params);
-  fetchMeterDetails();
+const incrementCount = ({target}) => memberOperations(target, "PUT", "/count");
+const clearCount = ({target}) => memberOperations(target, "DELETE", "/count");
+const deleteMember = ({target}) => memberOperations(target, "DELETE" , "/member")
+
+const addListenersToButtons = (className,callBack) => {
+  let buttons = getAllEle(`button[class=${className}]`);
+  buttons.forEach(button => button.onclick = callBack);
 }
 
+const addListenersToAllButtons = () => {
+  addListenersToButtons('add', incrementCount);
+  addListenersToButtons('remove', clearCount);
+  addListenersToButtons('delete', deleteMember);
+}
+
+const appendHeading = node => {
+  const heading = createTrWithData(
+    'th', 'Name' , 'Count', 'Treat Status', 'Add Count', 'Clear Count','Delete');
+  node.appendChild(heading);
+}
 const displayMemberDetails = function() {
   const response = JSON.parse(this.responseText);
   const shownDetails = getEle('table');
   const updatedDetails = createElement('table');
-  const heading = createTrWithData(
-    'th', 'Name' , 'Count', 'Treat Status', 'Add', 'Clear');
-  updatedDetails.appendChild(heading);
+  appendHeading(updatedDetails);
   Object.keys(response).forEach((key,index)=>{
       updateMemberDetails(updatedDetails, key, response[key]);
   })
   shownDetails.replaceWith(updatedDetails);
-  let addButtons = document.querySelectorAll('button[class=add]');
-  let removeButtons = document.querySelectorAll('button[class=remove]');
-  addButtons.forEach(button => button.onclick = incrementCount);
-  removeButtons.forEach(button => button.onclick = clearCount);
+  addListenersToAllButtons();
 }
 
 const fetchMeterDetails = () => {
