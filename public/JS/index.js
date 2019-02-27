@@ -1,16 +1,5 @@
-const createElement = function(element, innerText, className) {
-  let ele = document.createElement(element);
-  ele.innerText = innerText || '';
-  ele.className = className;
-  return ele;
-};
-
-const appendChilds = function(node, ...childs) {
-  childs.forEach(child => node.appendChild(child));
-};
-
-const createTrWithData = function(tag, ...args) {
-  let tr = createElement('tr','',args[0]);
+const createTrWithData = (tag, ...args) => {
+  let tr = createElement('tr');
   args.forEach(arg => appendChilds(tr, createElement(tag, arg)));
   return tr;
 };
@@ -44,7 +33,7 @@ const updateStatus = (tr,ticks) => {
 
 const addTickButton = tr => {
   const tickButton = createElement('button', 'Add', 'addTick');
-  const tickData =createElement('td');
+  const tickData = createElement('td');
   appendChilds(tickData,tickButton);
   appendChilds(tr,tickData);
 }
@@ -59,11 +48,8 @@ const updateMemberDetails = (table, name,ticks) => {
 
 const addTick = ({target}) => {
   const memberName = target.parentNode.parentNode.firstChild.innerText;
-  const params = JSON.stringify({"memberName":memberName})
-  let xhttp = new XMLHttpRequest();
-  xhttp.open("PUT", "/tick", true);
-  xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xhttp.send(params);
+  const params = JSON.stringify({"memberName":memberName});
+  sendAjaxRequest("PUT","/tick",'',params);
   fetchMeterDetails();
 }
 
@@ -83,9 +69,6 @@ const displayMemberDetails = function() {
 }
 
 const fetchMeterDetails = () => {
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = displayMemberDetails;
-  xhttp.open("GET", "/members", true);
-  xhttp.send();
+  sendAjaxRequest("GET","/members",displayMemberDetails);
 }
 window.onload = fetchMeterDetails;
