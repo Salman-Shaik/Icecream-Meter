@@ -80,21 +80,35 @@ tr:nth-child(2n) {
   background-color: #fdf7ff;
 }
 
-.addTick {
-  background-color: #4CAF50;
+button{
   font-family: Avenir;
   border: none;
   margin: 0;
   color: white;
-  padding: 5px 15px;
+  padding: 1px 10px;
+  margin: 2%;
   text-align: center;
   display: inline-block;
-  font-size: 70%;
-  border-radius: 17px;
+  font-size: 100%;
+  border-radius: 10px;
   box-shadow: 3px 3px 5px darkGray;
 }
 
-.addTick:hover{
+
+.remove{
+  background-color: #f44336;
+}
+
+.add {
+  background-color: #4CAF50;
+}
+
+.remove:hover{
+  background-color: #a22920;
+  box-shadow: 1px 1px 1px darkGray;
+}
+
+.add:hover{
   background-color: #38783a;
   box-shadow: 1px 1px 1px darkGray;
 }

@@ -62,3 +62,4 @@ typings/
 
 .talismanignore
 memberData.json
+*.DS_Store
