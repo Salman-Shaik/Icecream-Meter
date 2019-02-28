@@ -78,8 +78,7 @@ const fetchMemberName = node => {
   return fetchGrandParentFirstChild(node) || fetchGreatGrandParentFirstChild(node);
 }
 
-const memberOperations = (node,method,url) => {
-  const memberName = fetchMemberName(node) || node.parentNode.parentNode.parentNode.firstChild.innerText;
+const memberOperations = (node,method,url,memberName=fetchMemberName(node)) => {
   const params = JSON.stringify({"memberName":memberName});
   sendAjaxRequest(method,url,'',params);
   fetchMeterDetails();
@@ -87,7 +86,13 @@ const memberOperations = (node,method,url) => {
 
 const incrementCount = ({target}) => memberOperations(target, "PUT", "/count");
 const clearCount = ({target}) => memberOperations(target, "DELETE", "/count");
-const deleteMember = ({target}) => memberOperations(target, "DELETE" , "/member")
+const deleteMember = ({target}) =>  memberOperations(target, "DELETE", "/member");
+const addMember = ({target}) => {
+  const nameElement = getEle(".name");
+  const memberName = nameElement.value;
+  memberOperations(target, "POST", "/member",memberName);
+  nameElement.value='';
+}
 
 const addListenersToButtons = (className,callBack) => {
   let buttons = getAllEle(`button[class=${className}]`);
@@ -98,6 +103,7 @@ const addListenersToAllButtons = () => {
   addListenersToButtons('add', incrementCount);
   addListenersToButtons('remove', clearCount);
   addListenersToButtons('delete', deleteMember);
+  addListenersToButtons('addMember', addMember);
 }
 
 const appendHeading = node => {
@@ -115,9 +121,11 @@ const displayMemberDetails = function() {
   })
   shownDetails.replaceWith(updatedDetails);
   addListenersToAllButtons();
+  getEle(".name").focus();
 }
 
 const fetchMeterDetails = () => {
   sendAjaxRequest("GET","/members",displayMemberDetails);
 }
+
 window.onload = fetchMeterDetails;
