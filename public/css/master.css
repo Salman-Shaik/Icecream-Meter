@@ -70,6 +70,11 @@ li:nth-child(5n) {
   margin-right: 10px;
 }
 
+ol {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
 table {
   border-collapse: collapse;
   border: none;
@@ -81,23 +86,28 @@ table {
 }
 
 table tr:last-child td:first-child {
-    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 8px;
 }
 
 table tr:last-child td:last-child {
-    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 8px;
 }
 
 table tr:first-child th:last-child{
-  border-top-right-radius: 5px;
+  border-top-right-radius: 8px;
 }
 
 table tr:first-child th:first-child{
-  border-top-left-radius: 5px;
+  border-top-left-radius: 8px;
+}
+
+td,th{
+  height: 60px;
 }
 
 th {
   background-color: lightgray;
+  padding: 0px;
 }
 
 tr {
@@ -126,14 +136,14 @@ button:focus {
   outline: none;
 }
 
-.addMember {
+.addMember,.showForm {
   background-color: #2789ec;
   box-shadow: 5px 5px 10px Gray;
   font-size: 80%;
   padding: 6px 15px;
 }
 
-.addMember:hover{
+.addMember:hover,.showForm:hover{
   background-color: #1f6dbd;
   box-shadow: 1px 1px 1px gray;
 }

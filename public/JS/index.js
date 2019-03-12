@@ -84,26 +84,54 @@ const memberOperations = (node,method,url,memberName=fetchMemberName(node)) => {
   fetchMeterDetails();
 }
 
-const incrementCount = ({target}) => memberOperations(target, "PUT", "/count");
-const clearCount = ({target}) => memberOperations(target, "DELETE", "/count");
-const deleteMember = ({target}) =>  memberOperations(target, "DELETE", "/member");
-const addMember = ({target}) => {
-  const nameElement = getEle(".name");
-  const memberName = nameElement.value;
-  memberOperations(target, "POST", "/member",memberName);
-  nameElement.value='';
+const createInputForName = ()=>{
+  const nameElement = createElement('input','','name');
+  nameElement.type='text';
+  nameElement.placeholder='Full Name';
+  return nameElement;
+}
+
+const clearChildNodes = parentNode => {
+  parentNode.childNodes.forEach((node)=>{
+    parentNode.removeChild(node);
+  });
 }
 
 const addListenersToButtons = (className,callBack) => {
   let buttons = getAllEle(`button[class=${className}]`);
+  console.log(buttons);
   buttons.forEach(button => button.onclick = callBack);
+}
+
+const addMember = ({target}) =>{
+  const buttonHolder = target.parentNode;
+  const nameElement = getEle('.name');
+  const showForm = getEle('.showForm');
+  const memberName = nameElement.value;
+  memberOperations(target, "POST", "/member",memberName);
+  nameElement.value='';
+  clearChildNodes(buttonHolder);
+  buttonHolder.appendChild(showForm);
+}
+
+const incrementCount = ({target}) => memberOperations(target, "PUT", "/count");
+const clearCount = ({target}) => memberOperations(target, "DELETE", "/count");
+const deleteMember = ({target}) =>  memberOperations(target, "DELETE", "/member");
+const showForm = ({target}) => {
+  const buttonHolder = target.parentNode;
+  const nameElement = createInputForName();
+  const submitButton = createElement('button','Submit','addMember');
+  buttonHolder.replaceChild(nameElement,target);
+  buttonHolder.appendChild(submitButton);
+  nameElement.focus();
+  addListenersToButtons('addMember', addMember);
 }
 
 const addListenersToAllButtons = () => {
   addListenersToButtons('add', incrementCount);
   addListenersToButtons('remove', clearCount);
   addListenersToButtons('delete', deleteMember);
-  addListenersToButtons('addMember', addMember);
+  addListenersToButtons('showForm', showForm);
 }
 
 const appendHeading = node => {
@@ -118,10 +146,9 @@ const displayMemberDetails = function() {
   appendHeading(updatedDetails);
   Object.keys(response).forEach((key,index)=>{
       updateMemberDetails(updatedDetails, key, response[key]);
-  })
+  });
   shownDetails.replaceWith(updatedDetails);
   addListenersToAllButtons();
-  getEle(".name").focus();
 }
 
 const fetchMeterDetails = () => {
