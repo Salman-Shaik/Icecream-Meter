@@ -92,21 +92,20 @@ const createInputForName = ()=>{
 }
 
 const clearChildNodes = parentNode => {
-  parentNode.childNodes.forEach((node)=>{
-    parentNode.removeChild(node);
-  });
+  parentNode.removeChild(getEle('.name'));
+  parentNode.removeChild(getEle('.addMember'));
 }
 
 const addListenersToButtons = (className,callBack) => {
   let buttons = getAllEle(`button[class=${className}]`);
-  console.log(buttons);
   buttons.forEach(button => button.onclick = callBack);
 }
 
 const addMember = ({target}) =>{
   const buttonHolder = target.parentNode;
   const nameElement = getEle('.name');
-  const showForm = getEle('.showForm');
+  const showForm = createElement('button','➕ Add Member','showForm');
+  addListenersToButtons('showForm',showForm);
   const memberName = nameElement.value;
   memberOperations(target, "POST", "/member",memberName);
   nameElement.value='';
