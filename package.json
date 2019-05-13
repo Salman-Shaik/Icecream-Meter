@@ -18,12 +18,12 @@
   "homepage": "https://github.com/Salman-Shaik/Icecream-Meter#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "nodemon": "^1.18.10",
+    "nodemon": "^1.19.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.0.1",
+    "mocha": "^6.1.4",
     "supertest": "^3.4.2"
   }
 }

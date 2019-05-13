@@ -7,15 +7,15 @@ const createTrWithData = (tag, ...args) => {
 const getEle = selectorInput => document.querySelector(selectorInput);
 const getAllEle = selectorInput => document.querySelectorAll(selectorInput);
 
-const getStatus = count => {
+const getStatus = ({actualCount}) => {
   const statusDot = createElement('span','','dot red');
-  if(count <= 4 && count > 2) statusDot.className = 'dot yellow'
-  if(count >= 5 ) statusDot.className = 'dot green'
+  if(actualCount <= 4 && actualCount > 2) statusDot.className = 'dot yellow'
+  if(actualCount >= 5 ) statusDot.className = 'dot green'
   return statusDot;
 }
 
-const getTallyMarks = (tallyList,count) => {
-  for (let i = 0; i < count; i++) appendChilds(tallyList,createElement('li'));
+const getTallyMarks = (tallyList,{totalCount}) => {
+  for (let i = 0; i < totalCount; i++) appendChilds(tallyList,createElement('li'));
 }
 
 const updateTally = (tr,count) => {
@@ -41,7 +41,7 @@ const appendButton = (tr,innerHTML,className) => {
 }
 
 const appendAddButton = tr => appendButton(tr, '+', 'add');
-const appendRemoveButton = tr => appendButton(tr,'x','remove');
+const appendRemoveButton = tr => appendButton(tr,'✔️','reduce');
 const appendDeleteButton = tr => {
   const del = createElement('button','','delete');
   let icon =  createElement('i');
@@ -114,7 +114,7 @@ const addMember = ({target}) =>{
 }
 
 const incrementCount = ({target}) => memberOperations(target, "PUT", "/count");
-const clearCount = ({target}) => memberOperations(target, "DELETE", "/count");
+const treatGiven = ({target}) => memberOperations(target, "PUT", "/treat");
 const deleteMember = ({target}) =>  memberOperations(target, "DELETE", "/member");
 const showForm = ({target}) => {
   const buttonHolder = target.parentNode;
@@ -128,14 +128,14 @@ const showForm = ({target}) => {
 
 const addListenersToAllButtons = () => {
   addListenersToButtons('add', incrementCount);
-  addListenersToButtons('remove', clearCount);
+  addListenersToButtons('reduce', treatGiven);
   addListenersToButtons('delete', deleteMember);
   addListenersToButtons('showForm', showForm);
 }
 
 const appendHeading = node => {
   const heading = createTrWithData(
-    'th', 'Name' , 'Count', 'Treat Status', 'Add Count', 'Clear Count','Delete');
+    'th', 'Name' , 'Count', 'Treat Status', 'Add Count', 'Treat','Delete');
   node.appendChild(heading);
 }
 const displayMemberDetails = function() {

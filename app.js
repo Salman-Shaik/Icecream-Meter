@@ -28,7 +28,7 @@ app.use(express.static('public'))
 app.get('/members', getHandler.getMember)
 app.post('/member', postHandler.createMember);
 app.put('/count', putHandler.incrementTicks);
+app.put('/treat', putHandler.treatGiven);
 app.delete('/member', deleteHandler.deleteMember);
-app.delete('/count', deleteHandler.clearTicks);
 
 module.exports = app;
