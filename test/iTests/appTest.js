@@ -12,19 +12,6 @@ describe("#APP", () => {
     it('should get all members', done => {
       request(app)
         .get('/members')
-        .expect('{"user1":5,"user2":1,"user3":0}')
-        .expect(200)
-        .end(done);
-    });
-  });
-  describe("GET /count", done => {
-    it('should get the count of ticks of given memberName', done => {
-      request(app)
-        .get('/count')
-        .query({
-          memberName: "user1"
-        })
-        .expect("5")
         .expect(200)
         .end(done);
     });
@@ -33,7 +20,7 @@ describe("#APP", () => {
     it('should create member with the given memberName', done => {
       request(app)
         .post('/member')
-        .query({
+        .send({
           memberName: "user4"
         })
         .expect('Member Created Succesfully')
@@ -45,7 +32,7 @@ describe("#APP", () => {
     it('should update the count of ticks of given memberName', done => {
       request(app)
         .put('/count')
-        .query({
+        .send({
           memberName: "user1"
         })
         .expect('Updated Meter Successfully')
@@ -57,7 +44,7 @@ describe("#APP", () => {
     it('should delete member with the given memberName', done => {
       request(app)
         .delete('/member')
-        .query({
+        .send({
           memberName: "user3"
         })
         .expect('Member Deleted Successfully')
@@ -65,14 +52,14 @@ describe("#APP", () => {
         .end(done);
     });
   });
-  describe("DELETE /count", done => {
-    it('should clear the count of ticks of given memberName', done => {
+  describe("PUT /treat", done => {
+    it('should decrement the actualCount by 5', done => {
       request(app)
-        .delete('/count')
-        .query({
-          memberName: "user2"
+        .put('/treat')
+        .send({
+          memberName: "user4"
         })
-        .expect('Cleared Ticks Successfully')
+        .expect('Updated Ticks')
         .expect(202)
         .end(done);
     });
