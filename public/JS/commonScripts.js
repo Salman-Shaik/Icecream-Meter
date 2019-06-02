@@ -21,3 +21,6 @@ const appendChilds = (node, ...childs) => {
 };
 
 const isObjectEmpty = obj => Object.keys(obj).length === 0;
+
+const getEle = selectorInput => document.querySelector(selectorInput);
+const getAllEle = selectorInput => document.querySelectorAll(selectorInput);

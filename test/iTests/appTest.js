@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const request = require('supertest');
 const path = require('path');
 const app = require(path.resolve('app.js'));
-const mockMemberDataFile = 'test/testMeterData.json';
+const mockMemberDataFile = 'test/testMemberData.json';
 const mockUserDataFile = 'test/testUserInfo.json';
 
 describe("#APP", () => {
@@ -27,7 +27,7 @@ describe("#APP", () => {
         .send({
           memberName: "user4"
         })
-        .expect('Member Created Succesfully')
+        .expect('Member Created successfully')
         .expect(201)
         .end(done);
     });
@@ -40,7 +40,7 @@ describe("#APP", () => {
         .send({
           memberName: "user1"
         })
-        .expect('Updated Meter Successfully')
+        .expect('Updated Meter successfully')
         .expect(200)
         .end(done);
     });
@@ -53,7 +53,7 @@ describe("#APP", () => {
         .send({
           memberName: "user3"
         })
-        .expect('Member Deleted Successfully')
+        .expect('Member Deleted successfully')
         .expect(202)
         .end(done);
     });
@@ -80,7 +80,7 @@ describe("#APP", () => {
           userName: "tom",
           password: "bethany"
         })
-        .expect('Login Succesful')
+        .expect('Login successful')
         .expect(200)
         .end(done);
     })

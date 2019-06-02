@@ -6,7 +6,7 @@ const createMember = ({body,app},res)=>{
   app.meterData[memberName]['actualCount'] = 0;
   app.meterData[memberName]['totalCount'] = 0;
   saveMeterData(app);
-  res.status(201).send('Member Created Succesfully');
+  res.status(201).send('Member Created successfully');
 };
 
 const login = ({body,app},res) => {
@@ -15,13 +15,13 @@ const login = ({body,app},res) => {
     const userData = app.userData[userName];
     if(userData) {
       if(userData.password==password){
-        res.status(200).send('Login Succesful');
+        res.status(200).send('Login successful');
         return;
       }
       res.status(400).send('Invalid Password');
       return;
     }
-    res.status(400).send('Username Doesn\'t exist');
+    res.status(400).send("Username Doesn't exist");
 }
 
 module.exports = {

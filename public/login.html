@@ -4,8 +4,11 @@
     <meta charset="utf-8">
     <title>Login</title>
     <link rel="stylesheet" href="/css/master.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Snowburst+One">
     <link rel="icon" href="../resources/favicon.ico">
+    <script src="/JS/commonScripts.js" charset="utf-8"></script>
+    <script src="/JS/login.js" charset="utf-8"></script>
   </head>
   <body>
     <header>
@@ -13,9 +16,10 @@
     </header>
     <main class= "container">
       <div class= "login">
-        <span class= "heading" >Enter Your Credentails</span>
-        <input type="text" name="username" class="username" placeholder="Username">
-        <input type="password" name="password" class="password" placeholder="Password">
+        <label for="message" class="message"></label><br>
+        <span class= "heading" >Enter Your Credentails</span><br>
+        <input type="text" name="username" class="username" placeholder="Username"><br>
+        <input type="password" name="password" class="password" placeholder="Password"><br>
         <button class="loginbtn" type="submit" name="button">Login</button>
       </div>
     </main>

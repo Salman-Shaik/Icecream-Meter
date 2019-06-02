@@ -4,7 +4,7 @@ const incrementTicks = ({body,app},res) =>{
   app.meterData[memberName]['actualCount']++;
   app.meterData[memberName]['totalCount']++;
   saveMeterData(app);
-  res.send('Updated Meter Successfully');
+  res.send('Updated Meter successfully');
 }
 const treatGiven = ({body,app},res)=>{
   const memberName = body.memberName;

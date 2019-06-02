@@ -4,9 +4,6 @@ const createTrWithData = (tag, ...args) => {
   return tr;
 };
 
-const getEle = selectorInput => document.querySelector(selectorInput);
-const getAllEle = selectorInput => document.querySelectorAll(selectorInput);
-
 const getStatus = ({actualCount}) => {
   const statusDot = createElement('span','','dot red');
   if(actualCount <= 4 && actualCount > 2) statusDot.className = 'dot yellow'

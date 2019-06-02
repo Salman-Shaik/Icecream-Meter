@@ -62,7 +62,4 @@ typings/
 
 .talismanignore
 memberData.json
-testMeterData.json
-testUserInfo.json
-usersData.json
 *.DS_Store
