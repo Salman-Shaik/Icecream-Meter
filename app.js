@@ -15,10 +15,13 @@ const createFileIfNotExists = fileName =>{
 }
 
 const app = express();
-app.initialize = function(fileName) {
-  createFileIfNotExists(fileName);
-  app.dataFileName = fileName;
-  app.meterData = JSON.parse(fs.readFileSync(path.resolve(fileName),'utf-8'));
+app.initialize = function(memberDataFile,userDataFile) {
+  createFileIfNotExists(memberDataFile);
+  createFileIfNotExists(userDataFile);
+  app.memberDataFile = path.resolve(memberDataFile);
+  app.userDataFile = path.resolve(userDataFile);
+  app.meterData = JSON.parse(fs.readFileSync(app.memberDataFile,'utf-8'));
+  app.userData = JSON.parse(fs.readFileSync(app.userDataFile,'utf-8'));
 };
 
 app.use(express.json());
@@ -27,6 +30,7 @@ app.use(lib.indexHandler);
 app.use(express.static('public'))
 app.get('/members', getHandler.getMember)
 app.post('/member', postHandler.createMember);
+app.post('/login', postHandler.login);
 app.put('/count', putHandler.incrementTicks);
 app.put('/treat', putHandler.treatGiven);
 app.delete('/member', deleteHandler.deleteMember);

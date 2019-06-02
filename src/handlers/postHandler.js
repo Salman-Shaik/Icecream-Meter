@@ -9,6 +9,22 @@ const createMember = ({body,app},res)=>{
   res.status(201).send('Member Created Succesfully');
 };
 
+const login = ({body,app},res) => {
+    const userName = body.userName;
+    const password = body.password;
+    const userData = app.userData[userName];
+    if(userData) {
+      if(userData.password==password){
+        res.status(200).send('Login Succesful');
+        return;
+      }
+      res.status(400).send('Invalid Password');
+      return;
+    }
+    res.status(400).send('Username Doesn\'t exist');
+}
+
 module.exports = {
   createMember,
+  login,
 }

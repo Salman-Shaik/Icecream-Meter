@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const saveMeterData = ({dataFileName,meterData}) => {
-  fs.writeFileSync(dataFileName,JSON.stringify(meterData));
+const saveMeterData = ({memberDataFile,meterData}) => {
+  fs.writeFileSync(memberDataFile,JSON.stringify(meterData));
 }
 
 module.exports = {
