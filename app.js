@@ -27,8 +27,8 @@ app.initialize = function(memberDataFile,userDataFile) {
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(lib.getFirstPage);
 app.use(lib.logger);
-app.use(lib.indexHandler);
 app.use(lib.intializeMeterData);
 app.use(express.static('public'));
 app.get('/members', getHandler.getMember);
