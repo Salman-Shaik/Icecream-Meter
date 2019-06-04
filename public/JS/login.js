@@ -11,8 +11,8 @@ const login = () => {
     userName: userName,
     password: password
   });
-  console.log(body);
   sendAjaxRequest("POST","/login",updateMessage,body);
+  window.location.href = '/index.html';
 }
 
 const addListenersToButton= () => {

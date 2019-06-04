@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
 
 const lib = require(path.resolve('src/handlers/middlewares'));
 const getHandler = require(path.resolve('src/handlers/getHandler'));
@@ -20,15 +21,17 @@ app.initialize = function(memberDataFile,userDataFile) {
   createFileIfNotExists(userDataFile);
   app.memberDataFile = path.resolve(memberDataFile);
   app.userDataFile = path.resolve(userDataFile);
-  app.meterData = JSON.parse(fs.readFileSync(app.memberDataFile,'utf-8'));
+  app.memberData = JSON.parse(fs.readFileSync(app.memberDataFile,'utf-8'));
   app.userData = JSON.parse(fs.readFileSync(app.userDataFile,'utf-8'));
 };
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(lib.logger);
 app.use(lib.indexHandler);
-app.use(express.static('public'))
-app.get('/members', getHandler.getMember)
+app.use(lib.intializeMeterData);
+app.use(express.static('public'));
+app.get('/members', getHandler.getMember);
 app.post('/member', postHandler.createMember);
 app.post('/login', postHandler.login);
 app.put('/count', putHandler.incrementTicks);

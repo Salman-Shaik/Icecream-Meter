@@ -15,6 +15,7 @@ const login = ({body,app},res) => {
     const userData = app.userData[userName];
     if(userData) {
       if(userData.password==password){
+        res.cookie('userName',userName);
         res.status(200).send('Login successful');
         return;
       }
