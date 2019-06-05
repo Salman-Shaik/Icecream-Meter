@@ -1,9 +1,9 @@
-const {saveMeterData} = require('./utils.js');
+const {saveData} = require('./utils.js');
 
 const deleteMember = ({body,app}, res)=>{
   const memberName = body.memberName;
-  delete app.meterData[memberName];
-  saveMeterData(app);
+  delete app.memberData[memberName];
+  saveData(app);
   res.status(202).send('Member Deleted successfully');
 }
 

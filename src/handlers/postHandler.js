@@ -1,13 +1,28 @@
-const {saveMeterData} = require('./utils.js');
+const {saveData} = require('./utils.js');
 
 const createMember = ({body,app},res)=>{
   const memberName = body.memberName;
-  app.meterData[memberName] = {};
-  app.meterData[memberName]['actualCount'] = 0;
-  app.meterData[memberName]['totalCount'] = 0;
-  saveMeterData(app);
+  app.memberData[memberName] = {};
+  app.memberData[memberName]['actualCount'] = 0;
+  app.memberData[memberName]['totalCount'] = 0;
+  saveData(app);
   res.status(201).send('Member Created successfully');
 };
+
+const register = ({body,app},res) => {
+  const userName = body.userName;
+  const password = body.password;
+  if(app.userData[userName]){
+    res.status(400).send('Bad Request: User Already Exists');
+    return;
+  }
+  app.userData[userName]={}
+  app.userData[userName].userName=userName;
+  app.userData[userName].password=password;
+  console.log(app);
+  saveData(app);
+  res.status(201).send('Registration successful');
+}
 
 const login = ({body,app},res) => {
     const userName = body.userName;
@@ -19,13 +34,14 @@ const login = ({body,app},res) => {
         res.status(200).send('Login successful');
         return;
       }
-      res.status(400).send('Invalid Password');
+      res.status(400).send('Bad Request: Invalid Password');
       return;
     }
-    res.status(400).send("Username Doesn't exist");
+    res.status(400).send("Bad Request: Username Doesn't exist");
 }
 
 module.exports = {
   createMember,
   login,
+  register,
 }

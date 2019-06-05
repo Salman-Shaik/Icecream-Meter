@@ -85,6 +85,7 @@ const createInputForName = ()=>{
   const nameElement = createElement('input','','name');
   nameElement.type='text';
   nameElement.placeholder='Full Name';
+  nameElement.required=true;
   return nameElement;
 }
 
@@ -117,6 +118,7 @@ const showForm = ({target}) => {
   const buttonHolder = target.parentNode;
   const nameElement = createInputForName();
   const submitButton = createElement('button','Submit','addMember');
+  submitButton.type="submit";
   buttonHolder.replaceChild(nameElement,target);
   buttonHolder.appendChild(submitButton);
   nameElement.focus();

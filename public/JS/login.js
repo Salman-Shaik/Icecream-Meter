@@ -1,23 +1,25 @@
 const updateMessage = function() {
   const message = getEle('.message');
-  message.innerText = this.responseText;
+  message.innerText = this.responseText.replace(/Bad Request:/g,'Error:');
+  if(!this.responseText.includes('Bad Request:')){
+    window.location.href = '/index.html';
+  }
   message.style.padding="10px";
 }
 
 const login = () => {
   const userName = getEle('.username').value;
   const password = getEle('.password').value;
+  if(!(userName&&password)) return;
   const body = JSON.stringify({
     userName: userName,
     password: password
   });
   sendAjaxRequest("POST","/login",updateMessage,body);
-  window.location.href = '/index.html';
 }
 
 const addListenersToButton= () => {
   let loginbtn = getEle('.loginbtn');
-  console.log(loginbtn);
   loginbtn.onclick=login;
 }
 

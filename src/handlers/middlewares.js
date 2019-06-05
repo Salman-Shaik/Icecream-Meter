@@ -3,8 +3,10 @@ const logger = function ({url, method},res,next) {
   next();
 }
 
-const intializeMeterData = ({cookies,app},res,next) => {
-  app.meterData = app.memberData[cookies.userName];
+const initializeMemberData = ({cookies,app},res,next) => {
+  app.userName=cookies.userName;
+  app.memberData = app.meterData[app.userName];
+  if(!app.memberData) app.memberData={};
   next();
 }
 
@@ -24,6 +26,6 @@ const getFirstPage = ({url,cookies},res,next) => {
 
 module.exports = {
   logger,
-  intializeMeterData,
+  initializeMemberData,
   getFirstPage
 }

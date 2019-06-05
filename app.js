@@ -21,7 +21,7 @@ app.initialize = function(memberDataFile,userDataFile) {
   createFileIfNotExists(userDataFile);
   app.memberDataFile = path.resolve(memberDataFile);
   app.userDataFile = path.resolve(userDataFile);
-  app.memberData = JSON.parse(fs.readFileSync(app.memberDataFile,'utf-8'));
+  app.meterData = JSON.parse(fs.readFileSync(app.memberDataFile,'utf-8'));
   app.userData = JSON.parse(fs.readFileSync(app.userDataFile,'utf-8'));
 };
 
@@ -29,11 +29,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(lib.getFirstPage);
 app.use(lib.logger);
-app.use(lib.intializeMeterData);
+app.use(lib.initializeMemberData);
 app.use(express.static('public'));
 app.get('/members', getHandler.getMember);
 app.post('/member', postHandler.createMember);
 app.post('/login', postHandler.login);
+app.post('/register', postHandler.register);
 app.put('/count', putHandler.incrementTicks);
 app.put('/treat', putHandler.treatGiven);
 app.delete('/member', deleteHandler.deleteMember);
